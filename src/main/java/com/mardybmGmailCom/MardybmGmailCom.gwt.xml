@@ -1,0 +1,16 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="MardybmGmailCom">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+
+    <add-linker name="xsiframe"/>
+    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='com.mardybmGmailCom.client.MardybmGmailCom'/>
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/MardybmGmailComService' class='com.mardybmGmailCom.server.MardybmGmailComServiceImpl'/>
+</module>

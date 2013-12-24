@@ -1,0 +1,56 @@
+/** Add css rules here for your application. */
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+body, td, a, div, .p {
+    font-family: arial, sans-serif
+}
+
+.gwt-TabLayoutPanel {
+    height: 100%;
+}
+
+/** the tab bar */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
+
+}
+
+/** the individual tab in the tab bar */
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
+    min-width: 100px;
+    background: none repeat scroll 0 0 #DDECF4;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    margin-right: 5px;
+    font-size: 14px;
+    padding: 18px 5px 0 5px;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
+    border-top: 6px solid #6bbbe6;
+    padding: 12px 5px 0;
+}
+
+.gwt-TabLayoutPanelTab-selected:hover {
+    border-top: 6px solid #2f35e6 !important;
+    padding: 12px 5px 0 !important;
+}
+
+.gwt-TabLayoutPanelTab:hover {
+    border-top: 6px solid #F5E3DC;
+    padding: 12px 5px 0;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
+    border: 2px solid #E9E7E7;
+    background-color: #FAF6F1;
+}
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabInner {
+
+}
