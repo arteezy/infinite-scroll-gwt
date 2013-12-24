@@ -26,8 +26,8 @@ public class MardybmGmailCom implements EntryPoint {
         p.add(new HTML("lorem"), "[foo]");
         p.add(new HTML("ipsum"), "[bar]");
         p.add(new HTML("this"), "[this]");
-        p.add(new HTML("that"), "[what]");
-        p.add(new HTML("lol"), "[omg]");
+        p.add(button, "[what]");
+        p.add(label, "[omg]");
 
         p.selectTab(2);
 
@@ -40,9 +40,6 @@ public class MardybmGmailCom implements EntryPoint {
                 }
             }
         });
-
-        RootPanel.get("slot1").add(button);
-        RootPanel.get("slot2").add(label);
     }
 
     private static class MyAsyncCallback implements AsyncCallback<String> {
