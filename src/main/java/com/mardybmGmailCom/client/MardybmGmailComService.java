@@ -9,6 +9,8 @@ public interface MardybmGmailComService extends RemoteService {
     // Sample interface method of remote interface
     String getMessage(String msg);
 
+    String starter(String msg);
+
     /**
      * Utility/Convenience class.
      * Use MardybmGmailComService.App.getInstance() to access static instance of MardybmGmailComServiceAsync

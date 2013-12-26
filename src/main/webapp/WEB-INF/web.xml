@@ -13,4 +13,13 @@
         <servlet-name>com.mardybmGmailCom.MardybmGmailCom MardybmGmailComService</servlet-name>
         <url-pattern>/MardybmGmailCom/MardybmGmailComService</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>gwtRequest</servlet-name>
+        <servlet-class>com.google.web.bindery.requestfactory.server.RequestFactoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>gwtRequest</servlet-name>
+        <url-pattern>/gwtRequest</url-pattern>
+    </servlet-mapping>
 </web-app>
