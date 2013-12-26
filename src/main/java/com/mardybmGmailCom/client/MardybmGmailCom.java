@@ -1,10 +1,8 @@
 package com.mardybmGmailCom.client;
 
-import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -18,8 +16,8 @@ import com.google.gwt.view.client.Range;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
+import com.mardybmGmailCom.client.ui.DudeCellTable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MardybmGmailCom implements EntryPoint {
@@ -28,16 +26,34 @@ public class MardybmGmailCom implements EntryPoint {
     final private Label fname = new Label();
 
     public void onModuleLoad() {
-        CellList<String> cellList = new CellList<String>(new TextCell());
+        CellTable<DudeProxy> table = new CellTable<DudeProxy>();
         DudeDataProvider dataProvider = new DudeDataProvider();
-        dataProvider.addDataDisplay(cellList);
+        //dataProvider.addDataDisplay(table);
+
+        DudeCellTable cwcl = new DudeCellTable();
+
+        TextColumn<DudeProxy> fnameColumn = new TextColumn<DudeProxy>() {
+            @Override
+            public String getValue(DudeProxy object) {
+                return object.getFirstName();
+            }
+        };
+        table.addColumn(fnameColumn, "First Name");
+
+        TextColumn<DudeProxy> lnameColumn = new TextColumn<DudeProxy>() {
+            @Override
+            public String getValue(DudeProxy object) {
+                return object.getLastName();
+            }
+        };
+        table.addColumn(lnameColumn, "Last Name");
 
         SimplePager pager = new SimplePager();
-        pager.setDisplay(cellList);
+        pager.setDisplay(table);
 
         VerticalPanel vPanel = new VerticalPanel();
+        vPanel.add(table);
         vPanel.add(pager);
-        vPanel.add(cellList);
 
         final Button button = new Button("Dont Click me");
         final Label label = new Label();
@@ -47,16 +63,16 @@ public class MardybmGmailCom implements EntryPoint {
         fl.add(starter);
         fl.add(fname);
         fl.add(errorLabel);
+
         final TabLayoutPanel p = new TabLayoutPanel(32, Style.Unit.PX);
-        p.setSize("700px", "400px");
+        p.setSize("600px", "400px");
         RootPanel.get("panel").add(p);
 
         p.add(vPanel, "[foo]");
-        p.add(new HTML("ipsum"), "[bar]");
+        p.add(cwcl.create(dataProvider), "[bar]");
         p.add(new HTML("this"), "[this]");
         p.add(fl, "[what]");
         p.add(new HTML("still"), "[omg]");
-
         p.selectTab(2);
 
         starter.addClickHandler(new ClickHandler() {
@@ -78,20 +94,28 @@ public class MardybmGmailCom implements EntryPoint {
         });
     }
 
-    private List<DudeProxy> getList(int start, int end) {
-        DudeRequestFactory.DudeRequestContext context = createFactory().context();
-        final List<DudeProxy> namesList = new ArrayList<DudeProxy>();
-        context.getListByRange(start, end).fire(new Receiver<List<DudeProxy>>() {
-            @Override
-            public void onSuccess(List<DudeProxy> dudeProxyList) {
-                namesList.addAll(dudeProxyList);
-            }
-            @Override
-            public void onFailure(ServerFailure error) {
-                errorLabel.setText(error.getMessage());
-            }
-        });
-        return namesList;
+    private class DudeDataProvider extends AsyncDataProvider<DudeProxy> {
+        @Override
+        protected void onRangeChanged(HasData<DudeProxy> display) {
+            final Range range = display.getVisibleRange();
+            int start = range.getStart();
+            int length = range.getLength();
+
+
+            final int st = start;
+
+            DudeRequestFactory.DudeRequestContext context = createFactory().context();
+            context.getListByRange(start, start + length).fire(new Receiver<List<DudeProxy>>() {
+                @Override
+                public void onSuccess(List<DudeProxy> dudeProxyList) {
+                    updateRowData(st, dudeProxyList);
+                }
+                @Override
+                public void onFailure(ServerFailure error) {
+                    errorLabel.setText(error.getMessage());
+                }
+            });
+        }
     }
 
     private void spawnDude() {
@@ -116,26 +140,6 @@ public class MardybmGmailCom implements EntryPoint {
         DudeRequestFactory factory = GWT.create(DudeRequestFactory.class);
         factory.initialize(new SimpleEventBus());
         return factory;
-    }
-
-    private class DudeDataProvider extends AsyncDataProvider<String> {
-        @Override
-        protected void onRangeChanged(HasData<String> display) {
-            final Range range = display.getVisibleRange();
-
-            int start = range.getStart();
-            int length = range.getLength();
-
-            List<DudeProxy> dudes = getList(start, start + length);
-            List<String> newData = new ArrayList<String>();
-            for (int i = 0; i < dudes.size(); i++) {
-                DudeProxy dude = dudes.get(i);
-                newData.add(dude.getFirstName());
-            }
-
-            updateRowCount(100, false);
-            updateRowData(start, newData);
-        }
     }
 
     private static class HisAsyncCallback implements AsyncCallback<String> {

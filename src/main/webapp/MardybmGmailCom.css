@@ -47,7 +47,7 @@ body, td, a, div, .p {
 }
 
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
-    border: 2px solid #E9E7E7;
+    border: 1px solid #E9E7E7;
     background-color: #FAF6F1;
 }
 
