@@ -1,8 +1,8 @@
-package com.mardybmGmailCom.server;
+package com.hiringtask.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.mardybmGmailCom.client.MardybmGmailComService;
-import com.mardybmGmailCom.server.model.DudeGenerator;
+import com.hiringtask.client.MardybmGmailComService;
+import com.hiringtask.server.model.DudeGenerator;
 
 public class MardybmGmailComServiceImpl extends RemoteServiceServlet implements MardybmGmailComService {
     public String getMessage(String msg) {

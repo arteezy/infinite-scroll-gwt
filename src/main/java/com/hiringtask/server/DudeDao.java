@@ -1,10 +1,7 @@
-package com.mardybmGmailCom.server;
+package com.hiringtask.server;
 
-import com.mardybmGmailCom.server.model.Dude;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.StatelessSession;
-import org.hibernate.Transaction;
+import com.hiringtask.server.model.Dude;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.Iterator;
@@ -101,10 +98,10 @@ public class DudeDao {
     public List<Dude> getListByRange(int start, int end) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        List<Dude> dude = null;
+        List<Dude> dudeList = null;
         try {
             tx = session.beginTransaction();
-            dude = session.createCriteria(Dude.class)
+            dudeList = session.createCriteria(Dude.class)
                     .add(Restrictions.ge("id", start))
                     .add(Restrictions.lt("id", end)).list();
             tx.commit();
@@ -114,7 +111,34 @@ public class DudeDao {
         } finally {
             session.close();
         }
-        return dude;
+        return dudeList;
+    }
+
+    public List<Dude> getSortedListByRange(int start, int end, String column, boolean asc) {
+        if (column == null) {
+            return getListByRange(start, end);
+        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        List<Dude> dudeList = null;
+        String order = asc ? "asc" : "desc";
+        String sql = "select * from dude order by " +
+                column + " " +
+                order + " limit " +
+                String.valueOf(end - start) + " offset " +
+                String.valueOf(start);
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity(Dude.class);
+            dudeList = query.list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return dudeList;
     }
 
     public void updateDude(Integer DudeID) {

@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.client.ui;
+package com.hiringtask.client.ui;
 
 import com.google.gwt.user.cellview.client.AbstractPager;
 import com.google.gwt.user.client.ui.HTML;
@@ -8,14 +8,8 @@ import com.google.gwt.view.client.Range;
 
 public class RangeLabelPager extends AbstractPager {
 
-    /**
-     * The label that shows the current range.
-     */
     private final HTML label = new HTML();
 
-    /**
-     * Construct a new {@link RangeLabelPager}.
-     */
     public RangeLabelPager() {
         initWidget(label);
     }
@@ -26,6 +20,6 @@ public class RangeLabelPager extends AbstractPager {
         Range range = display.getVisibleRange();
         int start = range.getStart();
         int end = start + range.getLength();
-        label.setText(start + " - " + end + " : " + display.getRowCount());
+        label.setText(start + 1 + " - " + end + " : " + display.getRowCount());
     }
 }

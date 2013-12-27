@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.server;
+package com.hiringtask.server;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

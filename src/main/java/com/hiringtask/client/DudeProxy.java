@@ -1,9 +1,9 @@
-package com.mardybmGmailCom.client;
+package com.hiringtask.client;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
-import com.mardybmGmailCom.server.DudeLocator;
-import com.mardybmGmailCom.server.model.Dude;
+import com.hiringtask.server.DudeLocator;
+import com.hiringtask.server.model.Dude;
 
 @ProxyFor(value = Dude.class, locator = DudeLocator.class)
 public interface DudeProxy extends EntityProxy {

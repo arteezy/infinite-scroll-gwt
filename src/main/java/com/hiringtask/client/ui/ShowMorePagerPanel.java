@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.client.ui;
+package com.hiringtask.client.ui;
 
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
@@ -9,7 +9,7 @@ import com.google.gwt.view.client.HasRows;
 
 
 public class ShowMorePagerPanel extends AbstractPager {
-    private static final int DEFAULT_INCREMENT = 20;
+    private static final int DEFAULT_INCREMENT = 500;
 
     private int incrementSize = DEFAULT_INCREMENT;
 
@@ -32,16 +32,14 @@ public class ShowMorePagerPanel extends AbstractPager {
                 if (oldScrollPos >= lastScrollPos) {
                     return;
                 }
-
                 HasRows display = getDisplay();
                 if (display == null) {
                     return;
                 }
-                int maxScrollTop = scrollable.getWidget().getOffsetHeight()
-                        - scrollable.getOffsetHeight();
+                int maxScrollTop = scrollable.getWidget().getOffsetHeight() - scrollable.getOffsetHeight();
                 if (lastScrollPos >= maxScrollTop) {
                     // We are near the end, so increase the page size.
-                    int newPageSize = Math.max(
+                    int newPageSize = Math.min(
                             display.getVisibleRange().getLength() + incrementSize,
                             display.getRowCount());
                     display.setVisibleRange(0, newPageSize);
@@ -50,12 +48,6 @@ public class ShowMorePagerPanel extends AbstractPager {
         });
     }
 
-    /**
-     * Get the number of rows by which the range is increased when the scrollbar
-     * reaches the bottom.
-     *
-     * @return the increment size
-     */
     public int getIncrementSize() {
         return incrementSize;
     }

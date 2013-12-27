@@ -1,7 +1,6 @@
-package com.mardybmGmailCom.server.model;
+package com.hiringtask.server.model;
 
-import com.mardybmGmailCom.server.DudeDao;
-import com.mardybmGmailCom.server.HibernateUtil;
+import com.hiringtask.server.DudeDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +46,11 @@ public class DudeGenerator {
         dd.saveList(list);
     }
 
+    public void sort() {
+        List<Dude> dl = dd.getSortedListByRange(600, 700, null, true);
+        System.out.println(dl.get(0).getFirstName());
+    }
+
     public void hgenerate(int num) {
         for (int i = 0; i < num; i++) {
             Dude d = new Dude();
@@ -59,7 +63,8 @@ public class DudeGenerator {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         DudeGenerator DG = new DudeGenerator();
-        DG.dlgenerate(1_0_000);
+        DG.sort();
+        //DG.dlgenerate(1_00_000);
         long end = System.currentTimeMillis();
         System.out.println("\nTime of running: " + (end - start) + " ms");
     }

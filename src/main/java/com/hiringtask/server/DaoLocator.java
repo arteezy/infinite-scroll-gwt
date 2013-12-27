@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.server;
+package com.hiringtask.server;
 
 import com.google.web.bindery.requestfactory.shared.ServiceLocator;
 

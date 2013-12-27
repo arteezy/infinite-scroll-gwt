@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.server.model;
+package com.hiringtask.server.model;
 
 import javax.persistence.*;
 

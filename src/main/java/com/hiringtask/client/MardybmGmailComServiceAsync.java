@@ -1,4 +1,4 @@
-package com.mardybmGmailCom.client;
+package com.hiringtask.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

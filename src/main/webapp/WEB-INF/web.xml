@@ -6,11 +6,11 @@
          version="2.5">
 
     <servlet>
-        <servlet-name>com.mardybmGmailCom.MardybmGmailCom MardybmGmailComService</servlet-name>
-        <servlet-class>com.mardybmGmailCom.server.MardybmGmailComServiceImpl</servlet-class>
+        <servlet-name>com.hiringtask.MardybmGmailCom MardybmGmailComService</servlet-name>
+        <servlet-class>com.hiringtask.server.MardybmGmailComServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>com.mardybmGmailCom.MardybmGmailCom MardybmGmailComService</servlet-name>
+        <servlet-name>com.hiringtask.MardybmGmailCom MardybmGmailComService</servlet-name>
         <url-pattern>/MardybmGmailCom/MardybmGmailComService</url-pattern>
     </servlet-mapping>
 

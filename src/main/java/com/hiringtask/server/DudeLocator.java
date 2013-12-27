@@ -1,7 +1,7 @@
-package com.mardybmGmailCom.server;
+package com.hiringtask.server;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
-import com.mardybmGmailCom.server.model.Dude;
+import com.hiringtask.server.model.Dude;
 
 public class DudeLocator extends Locator<Dude, Integer>{
     @Override
