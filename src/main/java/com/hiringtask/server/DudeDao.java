@@ -153,6 +153,37 @@ public class DudeDao {
         }
     }
 
+    public void clear() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.createSQLQuery("drop table dude").executeUpdate();//"delete from dude").executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void prepare() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.createSQLQuery("SET FILES LOG FALSE").executeUpdate();
+            tx.commit();
+            tx = session.beginTransaction();
+            session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public void deleteDude(Integer DudeID) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;

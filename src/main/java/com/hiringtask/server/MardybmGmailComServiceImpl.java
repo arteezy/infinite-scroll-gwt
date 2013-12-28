@@ -11,7 +11,7 @@ public class MardybmGmailComServiceImpl extends RemoteServiceServlet implements 
 
     public String starter(String msg) {
         DudeGenerator dudeGenerator = new DudeGenerator();
-        dudeGenerator.start();
+        dudeGenerator.start(1_000_000);
         return "OMFG";
     }
 }

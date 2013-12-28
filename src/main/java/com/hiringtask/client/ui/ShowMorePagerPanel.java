@@ -2,20 +2,20 @@ package com.hiringtask.client.ui;
 
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.AbstractPager;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasRows;
 
 
 public class ShowMorePagerPanel extends AbstractPager {
-    private static final int DEFAULT_INCREMENT = 100;
-
-    private int incrementSize = DEFAULT_INCREMENT;
-
-    private int lastScrollPos = 0;
-
     private final ScrollPanel scrollable = new ScrollPanel();
+
+    private int incrementSize = 250;
+    private int lastScrollPos = 0;
+    //private boolean next = true;
 
     public ShowMorePagerPanel() {
         initWidget(scrollable);
@@ -28,6 +28,7 @@ public class ShowMorePagerPanel extends AbstractPager {
                 // If scrolling up, ignore the event.
                 int oldScrollPos = lastScrollPos;
                 lastScrollPos = scrollable.getVerticalScrollPosition();
+                //consoleLog("lastScrollPos", String.valueOf(lastScrollPos));
                 if (oldScrollPos >= lastScrollPos) {
                     return;
                 }
@@ -36,16 +37,24 @@ public class ShowMorePagerPanel extends AbstractPager {
                     return;
                 }
                 int maxScrollTop = scrollable.getWidget().getOffsetHeight() - scrollable.getOffsetHeight();
+                //consoleLog("maxScrollTop", String.valueOf(maxScrollTop));
                 if (lastScrollPos >= maxScrollTop) {
-                    // We are near the end, so increase the page size.
                     int newPageSize = Math.min(
                             display.getVisibleRange().getLength() + incrementSize,
                             display.getRowCount());
                     display.setVisibleRange(0, newPageSize);
+                    //next = false;
                 }
+                //if (lastScrollPos >= maxScrollTop) {
+                //    next = true;
+                //}
             }
         });
     }
+
+    native void consoleLog(String what, String message) /*-{
+        console.log( what + ": " + message );
+    }-*/;
 
     public int getIncrementSize() {
         return incrementSize;
@@ -58,12 +67,6 @@ public class ShowMorePagerPanel extends AbstractPager {
         super.setDisplay(display);
     }
 
-    /**
-     * Set the number of rows by which the range is increased when the scrollbar
-     * reaches the bottom.
-     *
-     * @param incrementSize the incremental number of rows
-     */
     public void setIncrementSize(int incrementSize) {
         this.incrementSize = incrementSize;
     }

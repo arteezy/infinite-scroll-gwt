@@ -9,7 +9,6 @@ import com.google.gwt.user.cellview.client.ColumnSortEvent.AsyncHandler;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.*;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -23,14 +22,14 @@ import java.util.List;
 
 public class DudeCellTable {
 
-    interface Binder extends UiBinder<Widget, DudeCellTable> {
-    }
+    interface Binder extends UiBinder<Widget, DudeCellTable> {}
 
-    final private Label errorLabel = new Label();
+    private CellTable<DudeProxy> cellTable = new CellTable<DudeProxy>();
 
-    private int cursor = 0;
-    private String sortedColumn = null;
+    private final int listRange = 500;
+    private String sortColName = null;
     private boolean isAscending;
+    private int cursor = 0;
 
     @UiField
     ShowMorePagerPanel pagerPanel;
@@ -38,10 +37,13 @@ public class DudeCellTable {
     @UiField
     RangeLabelPager rangeLabelPager;
 
-    public Widget create() {
-        final CellTable<DudeProxy> cellTable = new CellTable<DudeProxy>();
+    public void refreshTable() {
+        cellTable.setVisibleRangeAndClearData(new Range(0, listRange), true);
+        cursor = 0;
+    }
 
-        final DudeDataProvider dataProvider = new DudeDataProvider();
+    public Widget create() {
+        DudeDataProvider dataProvider = new DudeDataProvider();
 
         TextColumn<DudeProxy> fnameColumn = new TextColumn<DudeProxy>() {
             @Override
@@ -65,29 +67,28 @@ public class DudeCellTable {
         cellTable.addColumn(lnameColumn, "Last Name");
         lnameColumn.setSortable(true);
 
-        cellTable.setPageSize(200);
+        cellTable.setPageSize(listRange);
         cellTable.setRowCount(100000);
         cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-        cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+        //cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
-        final SingleSelectionModel<DudeProxy> selectionModel = new SingleSelectionModel<DudeProxy>();
-        cellTable.setSelectionModel(selectionModel);
+        //final SingleSelectionModel<DudeProxy> selectionModel = new SingleSelectionModel<DudeProxy>();
+        //cellTable.setSelectionModel(selectionModel);
 
         Binder uiBinder = GWT.create(Binder.class);
         Widget widget = uiBinder.createAndBindUi(this);
 
-        dataProvider.addDataDisplay(cellTable);
-
         AsyncHandler columnSortHandler = new AsyncHandler(cellTable) {
             @Override
             public void onColumnSort(ColumnSortEvent event) {
-                sortedColumn = cellTable.getColumnSortList().get(0).getColumn().getDataStoreName();
+                sortColName = cellTable.getColumnSortList().get(0).getColumn().getDataStoreName();
                 isAscending = event.isSortAscending();
-                cursor = 0;
-                RangeChangeEvent.fire(cellTable, new Range(0, 200));
+                refreshTable();
             }
         };
         cellTable.addColumnSortHandler(columnSortHandler);
+
+        dataProvider.addDataDisplay(cellTable);
 
         pagerPanel.setDisplay(cellTable);
         rangeLabelPager.setDisplay(cellTable);
@@ -95,34 +96,39 @@ public class DudeCellTable {
         return widget;
     }
 
-    private static DudeRequestFactory createFactory() {
-        DudeRequestFactory factory = GWT.create(DudeRequestFactory.class);
-        factory.initialize(new SimpleEventBus());
-        return factory;
-    }
-
     private class DudeDataProvider extends AsyncDataProvider<DudeProxy> {
         @Override
         protected void onRangeChanged(HasData<DudeProxy> display) {
             final int length;
-            if (cursor == 0) length = 200;
-            else length = 100;
+            if (cursor == 0) length = listRange;
+            else length = pagerPanel.getIncrementSize();
 
-            errorLabel.setText(String.valueOf(cursor) + " - " + String.valueOf(cursor + length));
+            consoleLog("Query", String.valueOf(cursor) + " - " + String.valueOf(cursor + length));
 
             DudeRequestFactory.DudeRequestContext context = createFactory().context();
-            context.getSortedListByRange(cursor, cursor + length, sortedColumn, isAscending)
+            context.getSortedListByRange(cursor, cursor + length, sortColName, isAscending)
                 .fire(new Receiver<List<DudeProxy>>() {
                     @Override
                     public void onSuccess(List<DudeProxy> dudeProxyList) {
+                        consoleLog("Return list size", String.valueOf(dudeProxyList.size()));
                         updateRowData(cursor, dudeProxyList);
                         cursor = cursor + length;
                     }
                     @Override
                     public void onFailure(ServerFailure error) {
-                        errorLabel.setText(error.getMessage());
+                        //errorLabel.setText(error.getMessage());
                     }
                 });
         }
+    }
+
+    native void consoleLog(String what, String message) /*-{
+        console.log( what + ": " + message );
+    }-*/;
+
+    private static DudeRequestFactory createFactory() {
+        DudeRequestFactory factory = GWT.create(DudeRequestFactory.class);
+        factory.initialize(new SimpleEventBus());
+        return factory;
     }
 }

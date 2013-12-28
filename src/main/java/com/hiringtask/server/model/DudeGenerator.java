@@ -14,65 +14,36 @@ public class DudeGenerator {
 
     private DudeDao dd = new DudeDao();
 
-    public List<String[]> generate(int num) {
-        List<String[]> list = new ArrayList<>();
-        for (int i = 0; i < num; i++) {
-            String[] tuple = new String[2];
-            tuple[0] = random5to10Name();
-            tuple[1] = random5to10Name();
-            list.add(tuple);
-        }
-        return list;
-    }
-
-    public List<String> lgenerate(int num) {
-        List<String> list = new ArrayList<>();
-        //((ArrayList) list).ensureCapacity(num);
-        for (int i = 0; i < num; i++) {
-            list.add(random5to10Name());
-        }
-        return list;
-    }
-
     public void dlgenerate(int num) {
         List<Dude> list = new ArrayList<>();
-        ((ArrayList) list).ensureCapacity(num);
+        //((ArrayList) list).ensureCapacity(num);
         for (int i = 0; i < num; i++) {
             Dude d = new Dude();
+            d.setId(i);
             d.setFirstName(random5to10Name());
             d.setLastName(random5to10Name());
             list.add(d);
+            if (i % 10_000 == 0) {
+                System.out.println(list.size());
+                dd.saveList(list);
+                list.clear();
+            }
         }
         dd.saveList(list);
     }
 
-    public void sort() {
-        List<Dude> dl = dd.getSortedListByRange(600, 700, null, true);
-        System.out.println(dl.get(0).getFirstName());
-    }
-
-    public void hgenerate(int num) {
-        for (int i = 0; i < num; i++) {
-            Dude d = new Dude();
-            d.setFirstName(random5to10Name());
-            d.setLastName(random5to10Name());
-            dd.save(d);
-        }
-    }
-
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
         DudeGenerator DG = new DudeGenerator();
-        //DG.sort();
-        DG.dlgenerate(1_00_000);
-        long end = System.currentTimeMillis();
-        System.out.println("\nTime of running: " + (end - start) + " ms");
+        DG.start(100_000);
+        //DG.dlgenerate(1_00_000);
     }
 
-    public void start() {
+    public void start(int num) {
         long start = System.currentTimeMillis();
         DudeGenerator DG = new DudeGenerator();
-        DG.lgenerate(1_000_000);
+        //dd.clear();
+        //dd.prepare();
+        DG.dlgenerate(num);
         long end = System.currentTimeMillis();
         System.out.println("\nTime of running: " + (end - start) + " ms");
     }
