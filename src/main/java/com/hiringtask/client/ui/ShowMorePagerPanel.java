@@ -9,7 +9,7 @@ import com.google.gwt.view.client.HasRows;
 
 
 public class ShowMorePagerPanel extends AbstractPager {
-    private static final int DEFAULT_INCREMENT = 500;
+    private static final int DEFAULT_INCREMENT = 100;
 
     private int incrementSize = DEFAULT_INCREMENT;
 
@@ -23,7 +23,6 @@ public class ShowMorePagerPanel extends AbstractPager {
         // Do not let the scrollable take tab focus.
         scrollable.getElement().setTabIndex(-1);
 
-        // Handle scroll events.
         scrollable.addScrollHandler(new ScrollHandler() {
             public void onScroll(ScrollEvent event) {
                 // If scrolling up, ignore the event.

@@ -96,7 +96,7 @@ public class DudeDao {
     }
 
     public List<Dude> getListByRange(int start, int end) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = null;
         List<Dude> dudeList = null;
         try {
@@ -108,8 +108,6 @@ public class DudeDao {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return dudeList;
     }
@@ -118,7 +116,7 @@ public class DudeDao {
         if (column == null) {
             return getListByRange(start, end);
         }
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = null;
         List<Dude> dudeList = null;
         String order = asc ? "asc" : "desc";
@@ -135,8 +133,6 @@ public class DudeDao {
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return dudeList;
     }

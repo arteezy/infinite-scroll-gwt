@@ -63,8 +63,8 @@ public class DudeGenerator {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         DudeGenerator DG = new DudeGenerator();
-        DG.sort();
-        //DG.dlgenerate(1_00_000);
+        //DG.sort();
+        DG.dlgenerate(1_00_000);
         long end = System.currentTimeMillis();
         System.out.println("\nTime of running: " + (end - start) + " ms");
     }

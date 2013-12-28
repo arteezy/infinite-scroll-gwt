@@ -35,6 +35,7 @@ public class DudeLocator extends Locator<Dude, Integer>{
 
     @Override
     public Object getVersion(Dude domainObject) {
-        return domainObject.getVersion();
+        // I don't need versions
+        return 0;
     }
 }

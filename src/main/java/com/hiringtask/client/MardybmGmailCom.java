@@ -1,25 +1,13 @@
 package com.hiringtask.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.ColumnSortList;
-import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.Range;
-import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.google.web.bindery.requestfactory.shared.Receiver;
-import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.hiringtask.client.ui.DudeCellTable;
 
-import java.util.List;
 
 public class MardybmGmailCom implements EntryPoint {
     final private Button starter = new Button("Spawn!");
@@ -37,16 +25,15 @@ public class MardybmGmailCom implements EntryPoint {
         vp.add(starter);
         vp.add(fname);
 
-        final TabLayoutPanel p = new TabLayoutPanel(32, Style.Unit.PX);
+        final TabLayoutPanel p = new TabLayoutPanel(32, Unit.PX);
         p.setSize("600px", "275px");
         RootPanel.get("panel").add(p);
         RootPanel.get("debug").add(errorLabel);
 
-        p.add(new HTML("lol"), "[foo]");
-        p.add(dct.create(), "[bar]");
+        p.add(new HTML("lol"), "Generator");
+        p.add(dct.create(), "Table");
         p.add(new HTML("this"), "[this]");
         p.add(vp, "[what]");
-        p.add(new HTML("still"), "[omg]");
         p.selectTab(2);
 
         starter.addClickHandler(new ClickHandler() {

@@ -25,10 +25,10 @@ public class DudeCellTable {
 
     interface Binder extends UiBinder<Widget, DudeCellTable> {
     }
+
     final private Label errorLabel = new Label();
 
     private int cursor = 0;
-    private int scursor = 0;
     private String sortedColumn = null;
     private boolean isAscending;
 
@@ -49,7 +49,8 @@ public class DudeCellTable {
                 return object.getFirstName();
             }
         };
-        fnameColumn.setDataStoreName("first_name");
+        fnameColumn.setDataStoreName("fName");
+        cellTable.setColumnWidth(fnameColumn, "200px");
         cellTable.addColumn(fnameColumn, "First Name");
         fnameColumn.setSortable(true);
 
@@ -59,11 +60,12 @@ public class DudeCellTable {
                 return object.getLastName();
             }
         };
-        lnameColumn.setDataStoreName("last_name");
+        lnameColumn.setDataStoreName("lName");
+        cellTable.setColumnWidth(lnameColumn, "200px");
         cellTable.addColumn(lnameColumn, "Last Name");
         lnameColumn.setSortable(true);
 
-        cellTable.setPageSize(1000);
+        cellTable.setPageSize(200);
         cellTable.setRowCount(100000);
         cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
         cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
@@ -76,14 +78,13 @@ public class DudeCellTable {
 
         dataProvider.addDataDisplay(cellTable);
 
-
         AsyncHandler columnSortHandler = new AsyncHandler(cellTable) {
             @Override
             public void onColumnSort(ColumnSortEvent event) {
                 sortedColumn = cellTable.getColumnSortList().get(0).getColumn().getDataStoreName();
                 isAscending = event.isSortAscending();
                 cursor = 0;
-                RangeChangeEvent.fire(cellTable, new Range(0, 1000));
+                RangeChangeEvent.fire(cellTable, new Range(0, 200));
             }
         };
         cellTable.addColumnSortHandler(columnSortHandler);
@@ -104,11 +105,11 @@ public class DudeCellTable {
         @Override
         protected void onRangeChanged(HasData<DudeProxy> display) {
             final int length;
-            if (cursor == 0) length = 1000;
-            else length = 500;
+            if (cursor == 0) length = 200;
+            else length = 100;
 
             errorLabel.setText(String.valueOf(cursor) + " - " + String.valueOf(cursor + length));
-            
+
             DudeRequestFactory.DudeRequestContext context = createFactory().context();
             context.getSortedListByRange(cursor, cursor + length, sortedColumn, isAscending)
                 .fire(new Receiver<List<DudeProxy>>() {

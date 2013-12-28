@@ -3,21 +3,21 @@ package com.hiringtask.server.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Dude")
+@Table(name = "Dude",
+        indexes = {
+        @Index(name = "fNameIndex", columnList = "fName"), // JPA2.1 syntax rocks!
+        @Index(name = "lNameIndex", columnList = "lName"),
+})
 public class Dude {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private Integer id;
 
-    @Version
-    @Column(name = "version")
-    private Long version;
-
-    @Column(name = "first_name")
+    @Column(name = "fName")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "lName")
     private String lastName;
 
     public Integer getId() {
@@ -26,14 +26,6 @@ public class Dude {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long id) {
-        this.version = version;
     }
 
     public String getFirstName() {
