@@ -16,7 +16,7 @@ public interface DudeRequestFactory extends RequestFactory {
         Request<DudeProxy> findById(int id);
         Request<List<DudeProxy>> getListByRange(int start, int end);
         Request<List<DudeProxy>> getSortedListByRange(int start, int end, String column, boolean asc);
-        Request<Void> save(DudeProxy dude);
+        Request<Void> saveDude(DudeProxy dude);
     }
 
     DudeRequestContext context();

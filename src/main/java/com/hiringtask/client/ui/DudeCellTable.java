@@ -7,8 +7,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.AsyncHandler;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.*;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -19,13 +19,13 @@ import com.hiringtask.client.DudeRequestFactory;
 
 import java.util.List;
 
-
 public class DudeCellTable {
 
     interface Binder extends UiBinder<Widget, DudeCellTable> {}
 
     private CellTable<DudeProxy> cellTable = new CellTable<DudeProxy>();
 
+    private final Label debugLabel = new Label();
     private final int listRange = 500;
     private String sortColName = null;
     private boolean isAscending;
@@ -37,12 +37,7 @@ public class DudeCellTable {
     @UiField
     RangeLabelPager rangeLabelPager;
 
-    public void refreshTable() {
-        cellTable.setVisibleRangeAndClearData(new Range(0, listRange), true);
-        cursor = 0;
-    }
-
-    public Widget create() {
+    public Widget createWidget(int genNum) {
         DudeDataProvider dataProvider = new DudeDataProvider();
 
         TextColumn<DudeProxy> fnameColumn = new TextColumn<DudeProxy>() {
@@ -68,12 +63,8 @@ public class DudeCellTable {
         lnameColumn.setSortable(true);
 
         cellTable.setPageSize(listRange);
-        cellTable.setRowCount(100000);
+        cellTable.setRowCount(genNum);
         cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-        //cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
-
-        //final SingleSelectionModel<DudeProxy> selectionModel = new SingleSelectionModel<DudeProxy>();
-        //cellTable.setSelectionModel(selectionModel);
 
         Binder uiBinder = GWT.create(Binder.class);
         Widget widget = uiBinder.createAndBindUi(this);
@@ -83,6 +74,7 @@ public class DudeCellTable {
             public void onColumnSort(ColumnSortEvent event) {
                 sortColName = cellTable.getColumnSortList().get(0).getColumn().getDataStoreName();
                 isAscending = event.isSortAscending();
+                pagerPanel.clearState();
                 refreshTable();
             }
         };
@@ -103,28 +95,32 @@ public class DudeCellTable {
             if (cursor == 0) length = listRange;
             else length = pagerPanel.getIncrementSize();
 
-            consoleLog("Query", String.valueOf(cursor) + " - " + String.valueOf(cursor + length));
-
             DudeRequestFactory.DudeRequestContext context = createFactory().context();
             context.getSortedListByRange(cursor, cursor + length, sortColName, isAscending)
                 .fire(new Receiver<List<DudeProxy>>() {
                     @Override
                     public void onSuccess(List<DudeProxy> dudeProxyList) {
-                        consoleLog("Return list size", String.valueOf(dudeProxyList.size()));
                         updateRowData(cursor, dudeProxyList);
                         cursor = cursor + length;
                     }
                     @Override
                     public void onFailure(ServerFailure error) {
-                        //errorLabel.setText(error.getMessage());
+                        debugLabel.setText(error.getMessage());
                     }
                 });
         }
     }
 
-    native void consoleLog(String what, String message) /*-{
-        console.log( what + ": " + message );
-    }-*/;
+    public void refreshTable() {
+        cellTable.setVisibleRangeAndClearData(new Range(0, listRange), true);
+        cursor = 0;
+    }
+
+    public void turnOffSorting() {
+        cellTable.getColumnSortList().clear();
+        pagerPanel.clearState();
+        sortColName = null;
+    }
 
     private static DudeRequestFactory createFactory() {
         DudeRequestFactory factory = GWT.create(DudeRequestFactory.class);

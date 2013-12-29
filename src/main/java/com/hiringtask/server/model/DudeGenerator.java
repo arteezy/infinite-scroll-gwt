@@ -1,30 +1,27 @@
 package com.hiringtask.server.model;
 
 import com.hiringtask.server.DudeDao;
+import com.hiringtask.server.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DudeGenerator {
     final String firstLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     final String numsAndLetters = "0123456789" + firstLetter.toLowerCase();
 
-    final Random rnd = new Random();
-
     private DudeDao dd = new DudeDao();
 
-    public void dlgenerate(int num) {
+    public void dlgenerate(int genNum) {
         List<Dude> list = new ArrayList<>();
-        //((ArrayList) list).ensureCapacity(num);
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < genNum; i++) {
             Dude d = new Dude();
             d.setId(i);
             d.setFirstName(random5to10Name());
             d.setLastName(random5to10Name());
             list.add(d);
             if (i % 10_000 == 0) {
-                System.out.println(list.size());
                 dd.saveList(list);
                 list.clear();
             }
@@ -34,26 +31,26 @@ public class DudeGenerator {
 
     public static void main(String[] args) {
         DudeGenerator DG = new DudeGenerator();
-        DG.start(100_000);
-        //DG.dlgenerate(1_00_000);
+        System.out.println(DG.start(1_000_000));
+        HibernateUtil.getSessionFactory().close();
     }
 
-    public void start(int num) {
+    public String start(int genNum) {
         long start = System.currentTimeMillis();
-        DudeGenerator DG = new DudeGenerator();
-        //dd.clear();
-        //dd.prepare();
-        DG.dlgenerate(num);
+        dd.clearTable();
+        dd.prepare();
+        dd.createScheme();
+        dlgenerate(genNum);
         long end = System.currentTimeMillis();
-        System.out.println("\nTime of running: " + (end - start) + " ms");
+        return ("Generation time: " + ((double) (end - start)/1000) + " s");
     }
 
     public String random5to10Name() {
-        int len = 5 + rnd.nextInt(6);
+        int len = 5 + ThreadLocalRandom.current().nextInt(6);
         StringBuilder sb = new StringBuilder(len);
-        sb.append(firstLetter.charAt(rnd.nextInt(firstLetter.length())));
+        sb.append(firstLetter.charAt(ThreadLocalRandom.current().nextInt(firstLetter.length())));
         for(int i = 0; i < len - 1; i++)
-            sb.append(numsAndLetters.charAt(rnd.nextInt(numsAndLetters.length())));
+            sb.append(numsAndLetters.charAt(ThreadLocalRandom.current().nextInt(numsAndLetters.length())));
         return sb.toString();
     }
 }

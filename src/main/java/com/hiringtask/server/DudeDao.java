@@ -28,7 +28,7 @@ public class DudeDao {
         return dudeID;
     }
 
-    public void save(Dude dude) {
+    public void saveDude(Dude dude) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -63,8 +63,8 @@ public class DudeDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            List employees = session.createQuery("FROM Dude").list();
-            for (Iterator iterator = employees.iterator(); iterator.hasNext(); ) {
+            List dudes = session.createQuery("FROM Dude").list();
+            for (Iterator iterator = dudes.iterator(); iterator.hasNext(); ) {
                 Dude dude = (Dude) iterator.next();
                 System.out.print("First Name: " + dude.getFirstName());
                 System.out.println(" Last Name: " + dude.getLastName());
@@ -153,18 +153,44 @@ public class DudeDao {
         }
     }
 
-    public void clear() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public void clearTable() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.createSQLQuery("drop table dude").executeUpdate();//"delete from dude").executeUpdate();
+            session.createSQLQuery("DROP TABLE dude").executeUpdate();
+            tx.commit();
+            tx = session.beginTransaction();
+            session.createSQLQuery("CHECKPOINT DEFRAG").executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            // Intentionally nothing
+        } finally {
+            session.close();
+        }
+    }
+
+    public void createScheme() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
+            tx.commit();
+            tx = session.beginTransaction();
+            session.createSQLQuery("CREATE INDEX FNAMEINDEX ON PUBLIC.DUDE(FNAME)").executeUpdate();
+            tx.commit();
+            tx = session.beginTransaction();
+            session.createSQLQuery("CREATE INDEX LNAMEINDEX ON PUBLIC.DUDE(LNAME)").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
+
 
     public void prepare() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -174,8 +200,11 @@ public class DudeDao {
             session.createSQLQuery("SET FILES LOG FALSE").executeUpdate();
             tx.commit();
             tx = session.beginTransaction();
-            session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
+            session.createSQLQuery("SET DATABASE GC 10000").executeUpdate();
             tx.commit();
+            //tx = session.beginTransaction();
+            //session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
+            //tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();

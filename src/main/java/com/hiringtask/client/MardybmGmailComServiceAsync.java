@@ -3,7 +3,5 @@ package com.hiringtask.client;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface MardybmGmailComServiceAsync {
-    void getMessage(String msg, AsyncCallback<String> async);
-
-    void starter(String msg, AsyncCallback<String> async);
+    void generate(int genNum, AsyncCallback<String> async);
 }

@@ -8,6 +8,9 @@ body, td, a, div, .p {
     font-family: arial, sans-serif
 }
 
+.gwt-Button {
+    font-size: 16px;
+}
 .gwt-TabLayoutPanel {
     height: 100%;
 }

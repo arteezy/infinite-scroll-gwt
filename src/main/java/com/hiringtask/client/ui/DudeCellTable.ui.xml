@@ -6,16 +6,19 @@
 
     <ui:style>
         .scrollable {
-            height: 200px;
+            height: 300px;
             width: 400px;
             border: 1px solid #ccc;
             text-align: left;
+        }
+        .pager {
+            margin: 5px;
         }
     </ui:style>
 
     <g:HTMLPanel>
         <s:ShowMorePagerPanel addStyleNames='{style.scrollable}' ui:field='pagerPanel' />
-        <s:RangeLabelPager ui:field='rangeLabelPager' />
+        <s:RangeLabelPager addStyleNames='{style.pager}' ui:field='rangeLabelPager' />
         <s:ShowMorePagerPanel ui:field='pager' />
     </g:HTMLPanel>
 </ui:UiBinder>
