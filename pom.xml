@@ -11,6 +11,7 @@
 
   <properties>
     <gwtVersion>2.5.1</gwtVersion>
+    <hibernateVersion>4.3.0.Final</hibernateVersion>
 
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -44,12 +45,12 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>4.3.0.Final</version>
+      <version>${hibernateVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>4.3.0.Final</version>
+      <version>${hibernateVersion}</version>
     </dependency>
     <dependency>
       <groupId>javax.validation</groupId>
@@ -70,7 +71,7 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <path>/</path>
+          <path>/mardybm-gmail-com</path>
         </configuration>
       </plugin>
       <plugin>
