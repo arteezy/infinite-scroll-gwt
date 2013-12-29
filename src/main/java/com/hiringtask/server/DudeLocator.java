@@ -2,6 +2,7 @@ package com.hiringtask.server;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
 import com.hiringtask.server.model.Dude;
+import com.hiringtask.server.model.DudeDao;
 
 public class DudeLocator extends Locator<Dude, Integer>{
     @Override

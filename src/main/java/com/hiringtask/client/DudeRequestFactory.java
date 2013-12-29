@@ -5,7 +5,7 @@ import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
 import com.hiringtask.server.DaoLocator;
-import com.hiringtask.server.DudeDao;
+import com.hiringtask.server.model.DudeDao;
 
 import java.util.List;
 

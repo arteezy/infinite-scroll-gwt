@@ -1,6 +1,7 @@
-package com.hiringtask.server;
+package com.hiringtask.server.model;
 
 import com.hiringtask.server.model.Dude;
+import com.hiringtask.server.model.HibernateUtil;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
@@ -170,7 +171,8 @@ public class DudeDao {
         }
     }
 
-    public void createScheme() {
+    // Intentionally bypassing Hibernate schema creation on update
+    public void createSchema() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -202,9 +204,6 @@ public class DudeDao {
             tx = session.beginTransaction();
             session.createSQLQuery("SET DATABASE GC 10000").executeUpdate();
             tx.commit();
-            //tx = session.beginTransaction();
-            //session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
-            //tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();

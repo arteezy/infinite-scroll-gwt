@@ -1,4 +1,4 @@
-package com.hiringtask.server;
+package com.hiringtask.server.model;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

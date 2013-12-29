@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Dude",
         indexes = {
-        @Index(name = "fNameIndex", columnList = "fName"), // JPA2.1 syntax rocks!
+        @Index(name = "fNameIndex", columnList = "fName"), // JPA2.1 syntax sucks
         @Index(name = "lNameIndex", columnList = "lName"),
 })
 public class Dude {

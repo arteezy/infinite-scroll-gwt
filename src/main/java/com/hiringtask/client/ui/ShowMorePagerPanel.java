@@ -1,6 +1,5 @@
 package com.hiringtask.client.ui;
 
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.user.cellview.client.AbstractPager;
@@ -15,6 +14,7 @@ public class ShowMorePagerPanel extends AbstractPager {
     private int lastMaxHeight = 0;
     private int lastScrollPos = 0;
     private boolean next = true;
+    private boolean resetScroll = false;
 
     public ShowMorePagerPanel() {
         initWidget(scrollable);
@@ -23,6 +23,12 @@ public class ShowMorePagerPanel extends AbstractPager {
 
         scrollable.addScrollHandler(new ScrollHandler() {
             public void onScroll(ScrollEvent event) {
+                consoleLog("LYL");
+                if (resetScroll) {
+                    scrollable.scrollToTop();
+                    consoleLog("onTop");
+                    resetScroll = false;
+                }
                 int oldScrollPos = lastScrollPos;
                 lastScrollPos = scrollable.getVerticalScrollPosition();
                 if (oldScrollPos >= lastScrollPos) return;
@@ -51,17 +57,13 @@ public class ShowMorePagerPanel extends AbstractPager {
     }
 
     public void clearState() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                scrollable.setVerticalScrollPosition(0);
-            }
-        });
-        scrollable.setVerticalScrollPosition(0);
-
         lastMaxHeight = 0;
         lastScrollPos = 0;
     }
+
+    native void consoleLog(String message) /*-{
+        console.log(message);
+    }-*/;
 
     public int getIncrementSize() {
         return incrementSize;

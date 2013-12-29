@@ -1,6 +1,6 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
         "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to="MardybmGmailCom">
+<module rename-to="TableOfDudes">
 
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.web.bindery.requestfactory.RequestFactory"/>
@@ -8,7 +8,7 @@
     <add-linker name="xsiframe"/>
     <set-configuration-property name="devModeRedirectEnabled" value="true"/>
 
-    <entry-point class='com.hiringtask.client.MardybmGmailCom'/>
+    <entry-point class='com.hiringtask.client.ui.TableOfDudes'/>
 
-    <servlet path='/MardybmGmailComService' class='com.hiringtask.server.MardybmGmailComServiceImpl'/>
+    <servlet path='/TableOfDudesService' class='com.hiringtask.server.TableOfDudesServiceImpl'/>
 </module>

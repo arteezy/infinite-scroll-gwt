@@ -66,6 +66,8 @@ public class DudeCellTable {
         cellTable.setRowCount(genNum);
         cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 
+        cellTable.getLoadingIndicator().setWidth("100px");
+
         Binder uiBinder = GWT.create(Binder.class);
         Widget widget = uiBinder.createAndBindUi(this);
 

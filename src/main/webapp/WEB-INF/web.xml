@@ -6,12 +6,12 @@
          version="2.5">
 
     <servlet>
-        <servlet-name>com.hiringtask.MardybmGmailCom MardybmGmailComService</servlet-name>
-        <servlet-class>com.hiringtask.server.MardybmGmailComServiceImpl</servlet-class>
+        <servlet-name>com.hiringtask.TableOfDudes TableOfDudesService</servlet-name>
+        <servlet-class>com.hiringtask.server.TableOfDudesServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>com.hiringtask.MardybmGmailCom MardybmGmailComService</servlet-name>
-        <url-pattern>/MardybmGmailCom/MardybmGmailComService</url-pattern>
+        <servlet-name>com.hiringtask.TableOfDudes TableOfDudesService</servlet-name>
+        <url-pattern>/TableOfDudes/TableOfDudesService</url-pattern>
     </servlet-mapping>
 
     <servlet>
