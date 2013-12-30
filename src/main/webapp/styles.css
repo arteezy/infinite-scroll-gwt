@@ -1,16 +1,15 @@
-h1 {
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
-}
-
 body, td, a, div, .p {
     font-family: arial, sans-serif
+}
+
+#panel {
+    margin: 100px 0;
 }
 
 .gwt-Button {
     font-size: 16px;
 }
+
 .gwt-TabLayoutPanel {
     height: 100%;
 }

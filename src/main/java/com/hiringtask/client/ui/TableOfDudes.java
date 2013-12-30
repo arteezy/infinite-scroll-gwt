@@ -9,38 +9,37 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.hiringtask.client.TableOfDudesService;
-import com.hiringtask.client.ui.DudeCellTable;
 
 public class TableOfDudes implements EntryPoint {
-    private DudeCellTable dct = new DudeCellTable();
+    private DudeCellTable dudeCellTable = new DudeCellTable();
 
     public void onModuleLoad() {
-        final int genNum = 100000;
+        final int genNum = 1000000;
         final Button genButton = new Button("Generate");
         final Label genLabel = new Label();
 
-        VerticalPanel vp = new VerticalPanel();
-        vp.setSize("100%", "100%");
-        vp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        vp.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+        VerticalPanel verticalPanel = new VerticalPanel();
+        verticalPanel.setSize("100%", "100%");
+        verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
-        FlowPanel fp = new FlowPanel();
-        fp.add(genButton);
-        fp.add(genLabel);
-        vp.add(fp);
+        FlowPanel flowPanel = new FlowPanel();
+        flowPanel.add(genButton);
+        flowPanel.add(genLabel);
+        verticalPanel.add(flowPanel);
 
-        TabLayoutPanel p = new TabLayoutPanel(32, Unit.PX);
-        p.setSize("600px", "400px");
-        RootPanel.get("panel").add(p);
+        TabLayoutPanel tabLayoutPanel = new TabLayoutPanel(32, Unit.PX);
+        tabLayoutPanel.setSize("600px", "400px");
+        RootPanel.get("panel").add(tabLayoutPanel);
 
-        p.add(vp, "Generator");
-        p.add(dct.createWidget(genNum), "Table");
+        tabLayoutPanel.add(verticalPanel, "Generator");
+        tabLayoutPanel.add(dudeCellTable.createWidget(genNum), "Table");
 
-        p.addSelectionHandler(new SelectionHandler<Integer>() {
+        tabLayoutPanel.addSelectionHandler(new SelectionHandler<Integer>() {
             @Override
             public void onSelection(SelectionEvent<Integer> event) {
                 if (event.getSelectedItem() == 1) {
-                    dct.refreshTable();
+                    dudeCellTable.refreshTable();
                 }
             }
         });
@@ -50,7 +49,7 @@ public class TableOfDudes implements EntryPoint {
                 TableOfDudesService.App.getInstance().generate(genNum, new GenAsyncCallback(genLabel, genButton));
                 genLabel.setText("Generating...");
                 genButton.setEnabled(false);
-                dct.turnOffSorting();
+                dudeCellTable.turnOffSorting();
             }
         });
     }

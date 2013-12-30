@@ -1,7 +1,5 @@
 package com.hiringtask.server.model;
 
-import com.hiringtask.server.model.Dude;
-import com.hiringtask.server.model.HibernateUtil;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 

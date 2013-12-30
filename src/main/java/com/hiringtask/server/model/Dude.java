@@ -4,14 +4,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Dude",
-        indexes = {
-        @Index(name = "fNameIndex", columnList = "fName"), // JPA2.1 syntax sucks
+        indexes = { // JPA2.1 syntax sucks
+        @Index(name = "fNameIndex", columnList = "fName"),
         @Index(name = "lNameIndex", columnList = "lName"),
 })
 public class Dude {
     @Id
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "fName")
     private String firstName;

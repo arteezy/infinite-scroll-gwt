@@ -19,6 +19,5 @@
     <g:HTMLPanel>
         <s:ShowMorePagerPanel addStyleNames='{style.scrollable}' ui:field='pagerPanel' />
         <s:RangeLabelPager addStyleNames='{style.pager}' ui:field='rangeLabelPager' />
-        <!--s:ShowMorePagerPanel ui:field='pager' /-->
     </g:HTMLPanel>
 </ui:UiBinder>

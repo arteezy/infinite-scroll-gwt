@@ -10,11 +10,10 @@ import com.google.gwt.view.client.HasRows;
 public class ShowMorePagerPanel extends AbstractPager {
     private final ScrollPanel scrollable = new ScrollPanel();
 
+    private boolean updateFlag = true;
     private int incrementSize = 250;
     private int lastMaxHeight = 0;
     private int lastScrollPos = 0;
-    private boolean next = true;
-    private boolean resetScroll = false;
 
     public ShowMorePagerPanel() {
         initWidget(scrollable);
@@ -23,28 +22,24 @@ public class ShowMorePagerPanel extends AbstractPager {
 
         scrollable.addScrollHandler(new ScrollHandler() {
             public void onScroll(ScrollEvent event) {
-                consoleLog("LYL");
-                if (resetScroll) {
-                    scrollable.scrollToTop();
-                    consoleLog("onTop");
-                    resetScroll = false;
-                }
                 int oldScrollPos = lastScrollPos;
                 lastScrollPos = scrollable.getVerticalScrollPosition();
                 if (oldScrollPos >= lastScrollPos) return;
+
                 HasRows display = getDisplay();
                 if (display == null) return;
+
                 int maxScrollTop = scrollable.getWidget().getOffsetHeight() - scrollable.getOffsetHeight();
                 int halfIncrementScrollSize = (maxScrollTop - lastMaxHeight) / 2;
-                if (lastScrollPos >= (maxScrollTop - halfIncrementScrollSize) && next) {
+                if (lastScrollPos >= (maxScrollTop - halfIncrementScrollSize) && updateFlag) {
                     int newPageSize = Math.min(
                         display.getVisibleRange().getLength() + incrementSize,
                         display.getRowCount());
                     lastMaxHeight = maxScrollTop;
                     display.setVisibleRange(0, newPageSize);
-                    next = false;
+                    updateFlag = false;
                 }
-                if (maxScrollTop > lastMaxHeight) next = true;
+                if (maxScrollTop > lastMaxHeight) updateFlag = true;
             }
         });
     }
@@ -60,10 +55,6 @@ public class ShowMorePagerPanel extends AbstractPager {
         lastMaxHeight = 0;
         lastScrollPos = 0;
     }
-
-    native void consoleLog(String message) /*-{
-        console.log(message);
-    }-*/;
 
     public int getIncrementSize() {
         return incrementSize;
