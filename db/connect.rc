@@ -1,4 +1,0 @@
-urlid localhost-sa
-url jdbc:hsqldb:hsql://localhost/xdb
-username SA
-password

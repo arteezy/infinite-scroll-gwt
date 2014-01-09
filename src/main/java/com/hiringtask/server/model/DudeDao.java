@@ -157,13 +157,14 @@ public class DudeDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.createSQLQuery("DROP TABLE dude").executeUpdate();
+            session.createSQLQuery("DROP TABLE dude IF EXISTS").executeUpdate();
             tx.commit();
             tx = session.beginTransaction();
             session.createSQLQuery("CHECKPOINT DEFRAG").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
-            // Intentionally nothing
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
         } finally {
             session.close();
         }

@@ -7,6 +7,7 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.AsyncHandler;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,6 +66,7 @@ public class DudeCellTable {
         cellTable.setPageSize(listRange);
         cellTable.setRowCount(genNum);
         cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+        cellTable.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.DISABLED);
 
         cellTable.getLoadingIndicator().setWidth("100px");
 
@@ -114,8 +116,8 @@ public class DudeCellTable {
     }
 
     public void refreshTable() {
-        cellTable.setVisibleRangeAndClearData(new Range(0, listRange), true);
         cursor = 0;
+        cellTable.setVisibleRangeAndClearData(new Range(0, listRange), true);
     }
 
     public void turnOffSorting() {
