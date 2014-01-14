@@ -6,6 +6,10 @@ body, td, a, div, .p {
     margin: 100px 0;
 }
 
+.datagrid {
+    border: 1px solid #e3e9ef;
+}
+
 .gwt-Button {
     font-size: 16px;
 }
@@ -42,7 +46,7 @@ body, td, a, div, .p {
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelContent {
     border: 1px solid #e3e9ef;
     background-color: #f3f9ff;
-    padding: 15px;
+    padding: 25px;
     border-radius: 10px;
     border-top-left-radius: 0;
 }

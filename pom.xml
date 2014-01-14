@@ -62,11 +62,6 @@
       <artifactId>hsqldb</artifactId>
       <version>2.3.1</version>
     </dependency>
-    <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>sqltool</artifactId>
-      <version>2.3.1</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -79,6 +74,9 @@
         <configuration>
           <path>/${project.artifactId}</path>
           <port>8181</port>
+          <systemProperties>
+            <JAVA_OPTS>-Xms256m -Xmx512m -XX:MaxPermSize=128m</JAVA_OPTS>
+          </systemProperties>          
         </configuration>
       </plugin>
       <plugin>

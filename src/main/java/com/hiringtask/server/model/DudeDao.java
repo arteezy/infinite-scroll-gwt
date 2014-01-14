@@ -158,9 +158,7 @@ public class DudeDao {
         try {
             tx = session.beginTransaction();
             session.createSQLQuery("DROP TABLE dude IF EXISTS").executeUpdate();
-            tx.commit();
-            tx = session.beginTransaction();
-            session.createSQLQuery("CHECKPOINT DEFRAG").executeUpdate();
+            //session.createSQLQuery("CHECKPOINT DEFRAG").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
@@ -177,11 +175,7 @@ public class DudeDao {
         try {
             tx = session.beginTransaction();
             session.createSQLQuery("CREATE MEMORY TABLE PUBLIC.DUDE(ID INTEGER NOT NULL PRIMARY KEY,FNAME VARCHAR(255),LNAME VARCHAR(255))").executeUpdate();
-            tx.commit();
-            tx = session.beginTransaction();
             session.createSQLQuery("CREATE INDEX FNAMEINDEX ON PUBLIC.DUDE(FNAME)").executeUpdate();
-            tx.commit();
-            tx = session.beginTransaction();
             session.createSQLQuery("CREATE INDEX LNAMEINDEX ON PUBLIC.DUDE(LNAME)").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
@@ -199,9 +193,9 @@ public class DudeDao {
         try {
             tx = session.beginTransaction();
             session.createSQLQuery("SET FILES LOG FALSE").executeUpdate();
-            tx.commit();
-            tx = session.beginTransaction();
             session.createSQLQuery("SET DATABASE GC 10000").executeUpdate();
+            session.createSQLQuery("SET FILES NIO SIZE 512").executeUpdate();
+            session.createSQLQuery("SET DATABASE TRANSACTION CONTROL MVCC").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();

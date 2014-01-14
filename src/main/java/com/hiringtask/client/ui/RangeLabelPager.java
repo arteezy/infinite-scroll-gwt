@@ -9,8 +9,8 @@ public class RangeLabelPager extends AbstractPager {
 
     private final HTML label = new HTML();
 
-    public RangeLabelPager() {
-        initWidget(label);
+    public HTML getLabel() {
+        return label;
     }
 
     @Override

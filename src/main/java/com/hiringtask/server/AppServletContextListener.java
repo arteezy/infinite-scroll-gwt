@@ -9,18 +9,20 @@ public class AppServletContextListener implements ServletContextListener{
 
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
-        System.out.println("<------ Oh My Fucking God ------>");
+
+        String rootPath = arg0.getServletContext().getRealPath("/");
+        System.setProperty("webroot", rootPath);
+
+        HibernateUtil.getSessionFactory();
     }
 
     public void contextDestroyed(ServletContextEvent arg0) {
         System.out.println("ServletContextListener destroyed");
-        System.out.println("<--------- Holy Shit ------->");
 
         if (!HibernateUtil.getSessionFactory().isClosed()) {
             HibernateUtil.getSessionFactory().openSession().createSQLQuery("SHUTDOWN").executeUpdate();
-            System.out.println("<--------- SUCCESSFUL SHUTDOWN ------->");
             HibernateUtil.getSessionFactory().close();
-            System.out.println("<--------- CLOSED ------->");
+            System.out.println("DB is successfully closed");
         }
     }
 }

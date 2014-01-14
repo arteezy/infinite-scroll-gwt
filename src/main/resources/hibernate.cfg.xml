@@ -6,11 +6,11 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="connection.url">jdbc:hsqldb:file:target/mardybm-gmail-com/db/db</property>
+        <property name="connection.url">jdbc:hsqldb:file:${webroot}db/db</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
 
-        <property name="connection.pool_size">3</property>
+        <property name="connection.pool_size">5</property>
 
         <property name="hibernate.jdbc.batch_size">50</property>
 
