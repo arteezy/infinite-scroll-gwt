@@ -22,6 +22,6 @@
 
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="com.hiringtask.server.model.Dude" />
+        <mapping class="com.infinitescrolling.server.model.Dude" />
     </session-factory>
 </hibernate-configuration>

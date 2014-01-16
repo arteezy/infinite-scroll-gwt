@@ -1,7 +1,7 @@
-package com.hiringtask.server;
+package com.infinitescrolling.server;
 
 import com.google.web.bindery.requestfactory.shared.ServiceLocator;
-import com.hiringtask.server.model.DudeDao;
+import com.infinitescrolling.server.model.DudeDao;
 
 public class DaoLocator implements ServiceLocator {
     @Override

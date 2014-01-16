@@ -1,4 +1,4 @@
-package com.hiringtask.client.ui;
+package com.infinitescrolling.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ScrollEvent;
@@ -9,15 +9,14 @@ import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagin
 import com.google.gwt.user.client.ui.HeaderPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
-import com.hiringtask.client.DudeProxy;
-import com.hiringtask.client.DudeRequestFactory;
+import com.infinitescrolling.client.DudeProxy;
+import com.infinitescrolling.client.DudeRequestFactory;
 
 import java.util.List;
 

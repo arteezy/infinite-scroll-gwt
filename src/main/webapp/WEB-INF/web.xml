@@ -6,15 +6,15 @@
          version="2.5">
 
     <listener>
-        <listener-class>com.hiringtask.server.AppServletContextListener</listener-class>
+        <listener-class>com.infinitescrolling.server.AppServletContextListener</listener-class>
     </listener>
 
     <servlet>
-        <servlet-name>com.hiringtask.TableOfDudes TableOfDudesService</servlet-name>
-        <servlet-class>com.hiringtask.server.TableOfDudesServiceImpl</servlet-class>
+        <servlet-name>com.infinitescrolling.TableOfDudes TableOfDudesService</servlet-name>
+        <servlet-class>com.infinitescrolling.server.TableOfDudesServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>com.hiringtask.TableOfDudes TableOfDudesService</servlet-name>
+        <servlet-name>com.infinitescrolling.TableOfDudes TableOfDudesService</servlet-name>
         <url-pattern>/TableOfDudes/TableOfDudesService</url-pattern>
     </servlet-mapping>
 

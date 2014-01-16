@@ -4,8 +4,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.hiringtask</groupId>
-  <artifactId>mardybm-gmail-com</artifactId>
+  <groupId>com.infinitescrolling</groupId>
+  <artifactId>dudes</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
 
@@ -74,9 +74,6 @@
         <configuration>
           <path>/${project.artifactId}</path>
           <port>8181</port>
-          <systemProperties>
-            <JAVA_OPTS>-Xms256m -Xmx512m -XX:MaxPermSize=128m</JAVA_OPTS>
-          </systemProperties>          
         </configuration>
       </plugin>
       <plugin>

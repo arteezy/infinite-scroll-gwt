@@ -1,11 +1,11 @@
-package com.hiringtask.client;
+package com.infinitescrolling.client;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
-import com.hiringtask.server.DaoLocator;
-import com.hiringtask.server.model.DudeDao;
+import com.infinitescrolling.server.DaoLocator;
+import com.infinitescrolling.server.model.DudeDao;
 
 import java.util.List;
 

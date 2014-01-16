@@ -1,4 +1,4 @@
-package com.hiringtask.client;
+package com.infinitescrolling.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

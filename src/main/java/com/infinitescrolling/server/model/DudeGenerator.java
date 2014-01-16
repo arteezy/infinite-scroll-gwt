@@ -1,4 +1,4 @@
-package com.hiringtask.server.model;
+package com.infinitescrolling.server.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,10 @@ public class DudeGenerator {
             Runnable run = new Runnable() {
                 @Override
                 public void run() {
-                    int number = Integer.parseInt(Thread.currentThread().getName());
                     List<Dude> list = new ArrayList<>();
-                    System.out.println("Thread: " + number + " (" + (number * genNum/4) + " - " + ((number + 1) * genNum/4) + ")");
-                    for (int j = (number * genNum/4); j < ((number + 1) * genNum/4); j++) {
+                    int number = Integer.parseInt(Thread.currentThread().getName());
+                    System.out.println("Thread: " + number + " (" + (number * genNum/numThreads) + " - " + ((number + 1) * genNum/numThreads) + ")");
+                    for (int j = (number * genNum/numThreads); j < ((number + 1) * genNum/numThreads); j++) {
                         Dude dude = new Dude();
                         dude.setId(j);
                         dude.setFirstName(random5to10Name());
@@ -70,18 +70,6 @@ public class DudeGenerator {
         parGenerateAndSave(genNum);
         long end = System.currentTimeMillis();
         return ("Generation time: " + ((double) (end - start)/1000) + " s");
-    }
-
-    public static void main(String[] args) {
-        DudeDao dudeDao = new DudeDao();
-        DudeGenerator dg = new DudeGenerator();
-        long start = System.currentTimeMillis();
-        dudeDao.clearTable();
-        dudeDao.prepare();
-        dudeDao.createSchema();
-        dg.parGenerateAndSave(1000000);
-        long end = System.currentTimeMillis();
-        System.out.println("Generation time: " + ((double) (end - start)/1000) + " s");
     }
 
     public String random5to10Name() {

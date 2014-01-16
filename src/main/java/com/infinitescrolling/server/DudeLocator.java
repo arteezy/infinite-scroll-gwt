@@ -1,8 +1,8 @@
-package com.hiringtask.server;
+package com.infinitescrolling.server;
 
 import com.google.web.bindery.requestfactory.shared.Locator;
-import com.hiringtask.server.model.Dude;
-import com.hiringtask.server.model.DudeDao;
+import com.infinitescrolling.server.model.Dude;
+import com.infinitescrolling.server.model.DudeDao;
 
 public class DudeLocator extends Locator<Dude, Integer>{
     @Override

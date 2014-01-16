@@ -1,4 +1,4 @@
-package com.hiringtask.server.model;
+package com.infinitescrolling.server.model;
 
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
@@ -62,7 +62,7 @@ public class DudeDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            List dudes = session.createQuery("FROM Dude").list();
+            List dudes = session.createQuery("FROM DUDE").list();
             for (Iterator iterator = dudes.iterator(); iterator.hasNext(); ) {
                 Dude dude = (Dude) iterator.next();
                 System.out.print("First Name: " + dude.getFirstName());
@@ -118,11 +118,11 @@ public class DudeDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = null;
         List<Dude> dudeList = null;
-        String order = asc ? "asc" : "desc";
-        String sql = "select * from dude order by " +
+        String order = asc ? "ASC" : "DESC";
+        String sql = "SELECT * FROM DUDE ORDER BY " +
                 column + " " +
-                order + " limit " +
-                String.valueOf(end - start) + " offset " +
+                order + " LIMIT " +
+                String.valueOf(end - start) + " OFFSET " +
                 String.valueOf(start);
         try {
             tx = session.beginTransaction();
@@ -157,7 +157,7 @@ public class DudeDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.createSQLQuery("DROP TABLE dude IF EXISTS").executeUpdate();
+            session.createSQLQuery("DROP TABLE DUDE IF EXISTS").executeUpdate();
             //session.createSQLQuery("CHECKPOINT DEFRAG").executeUpdate();
             tx.commit();
         } catch (HibernateException e) {

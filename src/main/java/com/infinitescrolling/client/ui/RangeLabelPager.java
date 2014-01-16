@@ -1,4 +1,4 @@
-package com.hiringtask.client.ui;
+package com.infinitescrolling.client.ui;
 
 import com.google.gwt.user.cellview.client.AbstractPager;
 import com.google.gwt.user.client.ui.HTML;

@@ -1,4 +1,4 @@
-package com.hiringtask.server.model;
+package com.infinitescrolling.server.model;
 
 import javax.persistence.*;
 

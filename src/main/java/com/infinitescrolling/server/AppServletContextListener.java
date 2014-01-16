@@ -1,6 +1,6 @@
-package com.hiringtask.server;
+package com.infinitescrolling.server;
 
-import com.hiringtask.server.model.HibernateUtil;
+import com.infinitescrolling.server.model.HibernateUtil;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

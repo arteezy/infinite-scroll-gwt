@@ -1,9 +1,9 @@
-package com.hiringtask.client;
+package com.infinitescrolling.client;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
-import com.hiringtask.server.DudeLocator;
-import com.hiringtask.server.model.Dude;
+import com.infinitescrolling.server.DudeLocator;
+import com.infinitescrolling.server.model.Dude;
 
 @ProxyFor(value = Dude.class, locator = DudeLocator.class)
 public interface DudeProxy extends EntityProxy {

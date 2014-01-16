@@ -1,8 +1,8 @@
-package com.hiringtask.server;
+package com.infinitescrolling.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.hiringtask.client.TableOfDudesService;
-import com.hiringtask.server.model.DudeGenerator;
+import com.infinitescrolling.client.TableOfDudesService;
+import com.infinitescrolling.server.model.DudeGenerator;
 
 public class TableOfDudesServiceImpl extends RemoteServiceServlet implements TableOfDudesService {
 

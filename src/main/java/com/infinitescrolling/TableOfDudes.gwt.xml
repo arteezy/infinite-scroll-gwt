@@ -8,7 +8,7 @@
     <add-linker name="xsiframe"/>
     <set-configuration-property name="devModeRedirectEnabled" value="true"/>
 
-    <entry-point class='com.hiringtask.client.ui.TableOfDudes'/>
+    <entry-point class='com.infinitescrolling.client.ui.TableOfDudes'/>
 
-    <servlet path='/TableOfDudesService' class='com.hiringtask.server.TableOfDudesServiceImpl'/>
+    <servlet path='/TableOfDudesService' class='com.infinitescrolling.server.TableOfDudesServiceImpl'/>
 </module>
